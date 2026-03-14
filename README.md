@@ -1,66 +1,77 @@
 # RAG Technical Documentation Assistant
 
-Système de question-réponse sur documentation technique utilisant RAG (Retrieval-Augmented Generation).
+A chatbot that answers questions about technical documentation using Retrieval-Augmented Generation (RAG).
 
-## Description
+## About
 
-Projet développé dans le cadre de LJ WebData pour permettre l'interrogation de documentation technique en langage naturel. Le système indexe des documents PDF et génère des réponses contextuelles avec sources.
+This project allows users to upload PDF documents and ask questions about them in natural language. The system retrieves relevant information from the documents and generates accurate answers using OpenAI's GPT-3.5.
 
-## Stack technique
+I built this to learn how RAG systems work and to practice implementing LangChain pipelines.
 
-- **LangChain** : Orchestration du pipeline RAG
-- **OpenAI GPT-3.5** : Génération des réponses
-- **FAISS** : Base vectorielle pour recherche sémantique
-- **Streamlit** : Interface utilisateur
+## How it works
 
-## Installation
+1. **Load documents**: PDF files are loaded from the `data/` folder
+2. **Split into chunks**: Documents are split into smaller pieces (1000 characters each with 200 character overlap)
+3. **Create embeddings**: Each chunk is converted to a vector using OpenAI embeddings
+4. **Store in FAISS**: Vectors are stored in a local FAISS database for fast similarity search
+5. **Answer questions**: When you ask a question, the system finds the 3 most relevant chunks and uses them to generate an answer with GPT-3.5
 
-### Prérequis
+## Tech Stack
 
-- Python 3.11+
-- Clé API OpenAI
+- **LangChain**: Framework for building the RAG pipeline
+- **OpenAI API**: For embeddings (text-embedding-ada-002) and text generation (GPT-3.5-turbo)
+- **FAISS**: Vector database for similarity search
+- **Streamlit**: Web interface
+- **Python 3.11**
 
-### Setup
+## Setup
+
+### Prerequisites
+
+- Python 3.11 or higher
+- OpenAI API key (get one at https://platform.openai.com/api-keys)
+
+### Installation
 
 ```bash
-# Cloner le repo
-git clone https://github.com/[username]/rag-technical-docs.git
+# Clone the repository
+git clone https://github.com/[your-username]/rag-technical-docs.git
 cd rag-technical-docs
 
-# Créer environnement virtuel
+# Create virtual environment
 python -m venv venv
-source venv/bin/activate  # Linux/Mac
-venv\Scripts\activate     # Windows
 
-# Installer les dépendances
+# Activate virtual environment
+# On Windows:
+venv\Scripts\activate
+# On Mac/Linux:
+source venv/bin/activate
+
+# Install dependencies
 pip install -r requirements.txt
+```
 
-# Ajouter vos PDFs dans le dossier data/
+### Add your documents
+
+Create a `data/` folder and add your PDF files:
+
+```bash
 mkdir data
-# Copier vos fichiers PDF dans data/
-Lancement
-Copystreamlit run app.py
-L'application sera accessible sur http://localhost:8501
+# Copy your PDF files to the data/ folder
+```
 
-Utilisation
-Entrer votre clé API OpenAI dans la sidebar
-Les documents du dossier data/ sont automatiquement indexés
-Poser vos questions dans le chat
-Les sources sont affichées sous chaque réponse
+### Run the application
 
-### Configuration
-Paramètres modifiables dans app.py :
+```bash
+streamlit run app.py
+```
 
-chunk_size : Taille des chunks (défaut: 1000)
-chunk_overlap : Chevauchement (défaut: 200)
-k : Nombre de documents récupérés (défaut: 3)
-temperature : Créativité du modèle (défaut: 0)
-TODO
- Support de formats supplémentaires (Word, Markdown)
- Amélioration du prompt system
- Export des conversations
- Base vectorielle persistante
-Contact
-Oumayma Lamjar
-lamjar.oumayma@gmail.com
-LinkedIn"# Assistant-IA-RAG" 
+The app will open in your browser at `http://localhost:8501`
+
+
+
+## Contact
+
+Oumayma Lamjar  
+lamjar.oumayma@gmail.com  
+[LinkedIn](https://linkedin.com/in/oumayma-lamjar)
